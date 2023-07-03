@@ -1,0 +1,22 @@
+name: 'C++ CI'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Bazel
+        run: sudo apt-get update --yes && sudo apt-get install --yes bazel
+      - name: Build
+        run: bazel build //src:helloworld_cli_deb --define VERSION=${{ github.run_number }}
+
+      - name: Check
+        run: apt install --yes bazel-bin/src/helloworld-0.0.${{ github.run_number }}-Linux.deb
+      - name: Run
+        run: helloworld_cli
