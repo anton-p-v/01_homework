@@ -28,4 +28,4 @@ jobs:
         run: sudo apt-get install --yes ./bazel-bin/src/helloworld-0.0.${{ github.run_number }}-Linux.deb
 
       - name: Run
-        run: /helloworld_cli
+        run: helloworld_cli

@@ -29,16 +29,16 @@ cc_binary(
 pkg_tar(
     name = "helloworld_cli_tar",
     srcs = [":helloworld_cli"],
-    # strip_prefix = "/usr/bin",
+    package_dir = "/usr/bin",
     package_file_name = "helloworld_cli.tar",
 )
 
 pkg_deb(
     name = "helloworld_cli_deb",
     data = ":helloworld_cli_tar",
-    description = "helloworld_cli",
+    description = "homework for otus",
     maintainer = "antonplatonov@yandex-team.ru",
     package = "helloworld_cli",
     package_file_name = "helloworld-0.0.$(VERSION)-Linux.deb",
-    version = "1",
+    version = "1.0",
 )
