@@ -26,15 +26,9 @@ cc_binary(
     ],
 )
 
-pkg_filegroup(
-    name = "helloworld_cli_pkg",
-    srcs = [":helloworld_cli"],
-    prefix = "/usr/bin",
-)
-
 pkg_tar(
     name = "helloworld_cli_tar",
-    srcs = [":helloworld_cli_pkg"],
+    srcs = [":helloworld_cli"],
     # strip_prefix = "/usr/bin",
     package_file_name = "helloworld_cli.tar",
 )
