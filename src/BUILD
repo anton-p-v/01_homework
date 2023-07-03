@@ -39,5 +39,5 @@ pkg_deb(
     maintainer = "antonplatonov@yandex-team.ru",
     package = "helloworld_cli",
     package_file_name = "helloworld-0.0.$(VERSION)-Linux.deb",
-    version = "$(VERSION)",
+    version = "1",
 )
