@@ -25,7 +25,7 @@ jobs:
         run: bazel build //src:helloworld_cli_deb --define VERSION=${{ github.run_number }}
 
       - name: Check
-        run: sudo apt install --yes bazel-bin/src/helloworld-0.0.${{ github.run_number }}-Linux.deb
+        run: sudo dpkg -i bazel-bin/src/helloworld-0.0.${{ github.run_number }}-Linux.deb
 
       - name: Run
         run: helloworld_cli
