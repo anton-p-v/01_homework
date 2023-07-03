@@ -9,14 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Bazel
+        run: |
+          sudo apt install --yes apt-transport-https curl gnupg
+          curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
+          sudo mv bazel-archive-keyring.gpg /usr/share/keyrings
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+          sudo apt update --yes
+          sudo apt install --yes bazel
+
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install Bazel
-        run: sudo apt-get update --yes && sudo apt-get install --yes bazel
+
       - name: Build
         run: bazel build //src:helloworld_cli_deb --define VERSION=${{ github.run_number }}
 
       - name: Check
         run: apt install --yes bazel-bin/src/helloworld-0.0.${{ github.run_number }}-Linux.deb
+        
       - name: Run
         run: helloworld_cli
