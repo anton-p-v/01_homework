@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Compute Version
-        run: echo "VERSION=${GITHUB_REF_NAME:5}" >> "$GITHUB_ENV"
+        run: echo "VERSION=${GITHUB_REF_NAME:5}" >> "$GITHUB_ENV" # shell expansion
 
       - name: Version
         run: echo "${{ env.VERSION }}"
@@ -30,15 +30,16 @@ jobs:
       - name: Build
         run: bazel build //src:helloworld_cli_deb --define VERSION=${{ env.VERSION }}
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: |
-      #       bazel-bin/src/helloworld-0.0.${{ env.VERSION }}-Linux.deb
-      #       bazel-bin/src/helloworld_cli
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            bazel-bin/src/helloworld-0.0.${{ env.VERSION }}-Linux.deb
+            bazel-bin/src/helloworld_cli
 
-      - name: Check
-        run: sudo apt-get install --yes ./bazel-bin/src/helloworld-0.0.${{ env.VERSION }}-Linux.deb
+      # - name: Check
+      #   run: sudo apt-get install --yes ./bazel-bin/src/helloworld-0.0.${{ env.VERSION }}-Linux.deb
 
-      - name: Run
-        run: helloworld_cli
+      # - name: Run
+      #   run: helloworld_cli
